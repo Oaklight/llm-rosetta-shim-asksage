@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "llm-rosetta-shim-asksage"
+dynamic = ["version"]
+description = "AskSage provider shims for llm-rosetta, delivered as a plugin package"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Oaklight" }]
+keywords = ["llm", "llm-rosetta", "shim", "asksage", "provider"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "License :: OSI Approved :: MIT License",
+]
+dependencies = ["llm-rosetta>=0.13.0"]
+
+[project.urls]
+Repository = "https://github.com/Oaklight/llm-rosetta-shim-asksage"
+Upstream = "https://github.com/Oaklight/llm-rosetta"
+
+[project.entry-points."llm_rosetta.shim_providers"]
+asksage = "llm_rosetta_shim_asksage:register_shims"
+
+[tool.setuptools.dynamic]
+version = { attr = "llm_rosetta_shim_asksage.__version__" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+llm_rosetta_shim_asksage = ["providers/**/*.yaml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
