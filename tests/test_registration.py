@@ -10,9 +10,9 @@ from llm_rosetta.shims.provider_shim import _reset_registry
 from llm_rosetta_shim_asksage import register_shims
 
 _SHIMS = {
-    "asksage--openai_chat": "openai_chat",
-    "asksage--openai_responses": "openai_responses",
-    "asksage--anthropic": "anthropic",
+    "asksage--chat_completions": "chat_completions",
+    "asksage--open_responses": "open_responses",
+    "asksage--messages": "messages",
     "asksage--google_generate": "google_generate",
 }
 

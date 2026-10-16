@@ -1,5 +1,5 @@
-name: asksage--openai_chat
-base: openai_chat
+name: asksage--open_responses
+base: open_responses
 
 connection:
   base_url: https://api.asksage.ai/server/openai/v1

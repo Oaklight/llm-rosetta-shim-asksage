@@ -1,5 +1,5 @@
-name: asksage--anthropic
-base: anthropic
+name: asksage--messages
+base: messages
 
 connection:
   base_url: https://api.asksage.ai/server/anthropic

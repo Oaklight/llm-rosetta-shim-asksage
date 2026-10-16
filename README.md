@@ -13,15 +13,20 @@ The built-in `asksage--*` shims stay in llm-rosetta for now.
 
 | Shim | Base |
 |:---|:---|
-| `asksage--openai_chat` | `openai_chat` |
-| `asksage--openai_responses` | `openai_responses` |
-| `asksage--anthropic` | `anthropic` |
+| `asksage--chat_completions` | `chat_completions` |
+| `asksage--open_responses` | `open_responses` |
+| `asksage--messages` | `messages` |
 | `asksage--google_generate` | `google_generate` |
 
+The pre-0.14 spellings `asksage--openai_chat` and `asksage--openai_responses`
+remain available as deprecated aliases in llm-rosetta; `asksage--anthropic` has
+no alias, so it must be updated to `asksage--messages`. New code should use the
+canonical names.
+
 All use AskSage's API-key env `ASKSAGE_API_KEY`; the `google_generate` leaf
-overrides the auth header to `x-access-tokens`, and the openai_* leaves add
-field renames. Unlike the argo/alcf packages, these transforms use only absolute
-imports.
+overrides the auth header to `x-access-tokens`, and the `chat_completions` and
+`open_responses` leaves add field renames. Unlike the argo/alcf packages, these
+transforms use only absolute imports.
 
 ## Install
 
