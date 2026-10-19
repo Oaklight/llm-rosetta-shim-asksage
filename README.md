@@ -3,11 +3,19 @@
 AskSage provider shims for [llm-rosetta](https://github.com/Oaklight/llm-rosetta),
 delivered as a **plugin package** rather than as built-in shims.
 
-Standalone-repository variant of
-[llm-rosetta#666](https://github.com/Oaklight/llm-rosetta/issues/666), verifying the
-plugin shim loader ([#272](https://github.com/Oaklight/llm-rosetta/issues/272) /
-[#273](https://github.com/Oaklight/llm-rosetta/issues/273)) against a real shim set.
-The built-in `asksage--*` shims stay in llm-rosetta for now.
+The `asksage--*` shims left llm-rosetta core in 0.14.0
+([#666](https://github.com/Oaklight/llm-rosetta/issues/666)); this package is now
+their only source. Declare it in the gateway config and existing provider
+entries keep their names:
+
+```jsonc
+{ "shims": { "presets": ["asksage"] } }
+```
+
+`shims.presets` expands to this repository's archive path via llm-rosetta's
+catalogue; the equivalent explicit entry is `{"url": "...", "path":
+"src/llm_rosetta_shim_asksage/providers"}`. The repository is public, so no
+`token_env` is needed.
 
 ## Shims
 
@@ -18,10 +26,9 @@ The built-in `asksage--*` shims stay in llm-rosetta for now.
 | `asksage--messages` | `messages` |
 | `asksage--google_generate` | `google_generate` |
 
-The pre-0.14 spellings `asksage--openai_chat` and `asksage--openai_responses`
-remain available as deprecated aliases in llm-rosetta; `asksage--anthropic` has
-no alias, so it must be updated to `asksage--messages`. New code should use the
-canonical names.
+The pre-0.14 spellings `asksage--openai_chat`, `asksage--openai_responses` and
+`asksage--anthropic` no longer resolve: this package registers the canonical
+names only. Update a legacy spelling to the canonical name above.
 
 All use AskSage's API-key env `ASKSAGE_API_KEY`; the `google_generate` leaf
 overrides the auth header to `x-access-tokens`, and the `chat_completions` and
