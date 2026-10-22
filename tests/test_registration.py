@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 import pytest
 
 from llm_rosetta.shims import get_shim
@@ -37,3 +39,19 @@ def test_google_generate_overrides_auth_header(_registered):
     shim = get_shim("asksage--google_generate")
     assert shim is not None
     assert shim.connection.auth_header == "x-access-tokens"
+
+
+@pytest.mark.parametrize("name", sorted(_SHIMS))
+def test_the_credential_exchange_ships_with_the_shim(_registered, name):
+    """A provider needs no ``token_command``: the shim declares one.
+
+    Resolved through a real load, so the assertion covers the packaging case —
+    a relative path that only exists in a source checkout would fail here.
+    """
+    shim = get_shim(name)
+    assert shim is not None
+    argv = shim.connection.token_command
+    assert argv is not None and argv[0] == "python3"
+    script = Path(argv[1])
+    assert script.is_absolute() and script.is_file(), argv
+    assert script.name == "token.py"

@@ -22,7 +22,13 @@ jobs:
           # The parent's test-fixture submodule is addressed as git@github.com:;
           # rewrite it to HTTPS, which the runner can clone without a key.
           git config --global url."https://github.com/".insteadOf "git@github.com:"
-          pip install "llm-rosetta @ git+https://github.com/Oaklight/llm-rosetta.git@master"
+          # The core is a two-package monorepo since 0.14; without the
+          # subdirectory pip clones the repository root, finds no project
+          # there and tries a flat-layout build of every directory.
+          pip install "llm-rosetta @ git+https://github.com/Oaklight/llm-rosetta.git@master#subdirectory=packages/llm-rosetta"
+          # The script has to give up before the gateway kills a token_command,
+          # so one test compares against the gateway's COMMAND_TIMEOUT.
+          pip install "llm-rosetta-gateway @ git+https://github.com/Oaklight/llm-rosetta.git@master#subdirectory=packages/llm-rosetta-gateway"
       - name: Install the shim package
         run: pip install -e . pytest
       - name: Run tests

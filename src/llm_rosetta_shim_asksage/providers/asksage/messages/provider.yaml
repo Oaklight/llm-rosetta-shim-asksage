@@ -5,6 +5,9 @@ format: messages
 connection:
   base_url: https://api.asksage.ai/server/anthropic
   api_key_env: ASKSAGE_API_KEY
+  # The token exchange ships with the shim; a relative argument is
+  # resolved against this provider.yaml's directory.
+  token_command: [python3, ../token.py]
 
 # Host note, same split as the sibling `asksage--open_responses` shim: `/models`
 # answers on this host, but inference needs an access token, and for an ANL
@@ -28,7 +31,7 @@ reasoning:
   effort_range: [low, max]
   # Probed live 2026-10-13 against
   # `https://api.asksage.anl.gov/server/anthropic/v1/messages` with a token
-  # minted by `scripts/asksage-token.py` — the account API key is refused by the
+  # minted by the `token.py` shipped beside this shim — the account API key is refused by the
   # inference lanes as a direct credential (`Token is invalid [2]`).
   # The lane is Vertex-backed Claude (`msg_vrtx_...`) and validates signatures
   # like the API it fronts: `400 messages.1.content.0.thinking.signature: Field

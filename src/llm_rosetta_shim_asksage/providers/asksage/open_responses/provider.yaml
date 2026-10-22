@@ -5,6 +5,9 @@ format: open_responses
 connection:
   base_url: https://api.asksage.ai/server/openai/v1
   api_key_env: ASKSAGE_API_KEY
+  # The token exchange ships with the shim; a relative argument is
+  # resolved against this provider.yaml's directory.
+  token_command: [python3, ../token.py]
 
 # AskSage returns "resp_"-prefixed response ids on every model tested, so the
 # prefix is stripped on the way in and re-added on the way out.
