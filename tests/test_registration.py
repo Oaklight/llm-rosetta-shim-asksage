@@ -55,3 +55,6 @@ def test_the_credential_exchange_ships_with_the_shim(_registered, name):
     script = Path(argv[1])
     assert script.is_absolute() and script.is_file(), argv
     assert script.name == "token.py"
+    # The exchange takes the account key as input; without this the key the
+    # operator enters in the panel would never reach the command.
+    assert shim.connection.token_command_env == "ASKSAGE_API_KEY"

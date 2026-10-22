@@ -45,12 +45,11 @@ exchange ships with this package — every `provider.yaml` declares
 declared interval and after an upstream 401. A provider that names its own command
 still wins.
 
-The command runs with the gateway's environment, so the account key has to be
-reachable from it: `ASKSAGE_TOKEN_API_KEY`, `ASK_SAGE_API` (the ANL sample client's
-name), or `ASKSAGE_API_KEY`. Handing the script the key an operator types into the
-panel is tracked upstream
-([llm-rosetta#946](https://github.com/Oaklight/llm-rosetta/issues/946)) and does not
-exist yet.
+The shims also declare `connection.token_command_env: ASKSAGE_API_KEY`, so the
+account key an operator enters in the admin panel is handed to the exchange in that
+variable — it is the command's input, and the minted token is what goes upstream.
+Exporting `ASKSAGE_API_KEY` (or `ASKSAGE_TOKEN_API_KEY` / `ASK_SAGE_API`) in the
+gateway's environment still works and feeds the same variable.
 
 ## Install
 
