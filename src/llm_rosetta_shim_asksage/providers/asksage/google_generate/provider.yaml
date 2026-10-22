@@ -8,4 +8,7 @@ connection:
   # The token exchange ships with the shim; a relative argument is
   # resolved against this provider.yaml's directory.
   token_command: [python3, ../token.py]
+  # The exchange takes the account key as input: the gateway hands it
+  # over in this variable and sends the minted token upstream.
+  token_command_env: ASKSAGE_API_KEY
   auth_header: x-access-tokens
