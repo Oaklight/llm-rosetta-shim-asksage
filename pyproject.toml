@@ -16,7 +16,9 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "License :: OSI Approved :: MIT License",
 ]
-dependencies = ["llm-rosetta>=0.13.0"]
+# ``connection.token_command`` lands in 0.14; an older core silently ignores
+# the key, so the floor is what makes the shipped exchange actually run.
+dependencies = ["llm-rosetta>=0.14.0.dev0"]
 
 [project.urls]
 Repository = "https://github.com/Oaklight/llm-rosetta-shim-asksage"

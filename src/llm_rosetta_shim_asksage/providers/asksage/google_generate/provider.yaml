@@ -5,4 +5,7 @@ format: google_generate
 connection:
   base_url: https://api.asksage.ai/server/google/v1beta
   api_key_env: ASKSAGE_API_KEY
+  # The token exchange ships with the shim; a relative argument is
+  # resolved against this provider.yaml's directory.
+  token_command: [python3, ../token.py]
   auth_header: x-access-tokens
