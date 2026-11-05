@@ -30,6 +30,10 @@ jobs:
           # so one test compares against the gateway's COMMAND_TIMEOUT.
           pip install "llm-rosetta-gateway @ git+https://github.com/Oaklight/llm-rosetta.git@master#subdirectory=packages/llm-rosetta-gateway"
       - name: Install the shim package
-        run: pip install -e . pytest
+        # The published floor names the first release with the vendor manifest;
+        # it is not on PyPI yet, and core is installed from git master above.
+        run: |
+          pip install --no-deps -e .
+          pip install pytest
       - name: Run tests
         run: pytest tests -q

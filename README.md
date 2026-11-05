@@ -45,7 +45,7 @@ exchange ships with this package — every `provider.yaml` declares
 declared interval and after an upstream 401. A provider that names its own command
 still wins.
 
-The shims also declare `connection.token_command_env: ASKSAGE_API_KEY`, so the
+The manifest also declares `connection.token_command_env: ASKSAGE_API_KEY`, so the
 account key an operator enters in the admin panel is handed to the exchange in that
 variable — it is the command's input, and the minted token is what goes upstream.
 Exporting `ASKSAGE_API_KEY` (or `ASKSAGE_TOKEN_API_KEY` / `ASK_SAGE_API`) in the
@@ -63,7 +63,8 @@ the `asksage--*` shims automatically.
 ## Requirements
 
 - Python >= 3.10
-- `llm-rosetta >= 0.14.0` (the plugin shim loader **and** `connection.token_command`;
+- `llm-rosetta >= 0.14.0.dev28` (the plugin shim loader, the vendor manifest **and**
+  `connection.token_command`;
   an older core ignores the key and the provider would start with no credential)
 - One of `ASKSAGE_TOKEN_API_KEY` / `ASK_SAGE_API` / `ASKSAGE_API_KEY` in the
   gateway's environment, for the shipped exchange to mint its token

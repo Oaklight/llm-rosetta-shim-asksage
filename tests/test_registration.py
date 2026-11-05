@@ -58,3 +58,16 @@ def test_the_credential_exchange_ships_with_the_shim(_registered, name):
     # The exchange takes the account key as input; without this the key the
     # operator enters in the panel would never reach the command.
     assert shim.connection.token_command_env == "ASKSAGE_API_KEY"
+
+
+@pytest.mark.parametrize("name", sorted(_SHIMS))
+def test_the_credential_comes_from_the_vendor_manifest(_registered, name):
+    """The manifest holds the credential once; each leaf only adds its URL."""
+    shim = get_shim(name)
+    assert shim is not None
+    assert shim.manifest is not None
+    assert shim.manifest.path.name == "provider.yaml"
+    assert shim.connection.api_key_env == "ASKSAGE_API_KEY"
+    assert shim.connection.token_command_env == "ASKSAGE_API_KEY"
+    script = Path(shim.connection.token_command[1])
+    assert script.name == "token.py" and script.is_file()
