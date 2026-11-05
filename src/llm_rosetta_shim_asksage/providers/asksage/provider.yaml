@@ -1,0 +1,10 @@
+# Vendor manifest: the credential every AskSage lane shares.  A leaf inherits
+# every field here and may override any of them; a relative ``token_command``
+# argument resolves against this file's directory.
+connection:
+  api_key_env: ASKSAGE_API_KEY
+  # The token exchange ships with the shim.
+  token_command: [python3, token.py]
+  # The exchange takes the account key as input: the gateway hands it over in
+  # this variable and sends the minted token upstream.
+  token_command_env: ASKSAGE_API_KEY
