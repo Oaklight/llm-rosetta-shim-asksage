@@ -60,6 +60,66 @@ pip install llm-rosetta llm-rosetta-shim-asksage
 llm-rosetta discovers the `llm_rosetta.shim_providers` entry point and registers
 the `asksage--*` shims automatically.
 
+## Archive and mirror
+
+Every release publishes one archive of the bundled shims, so a gateway can load
+them from a host other than GitHub. `main` never carries it: `dist/` is build
+output and is in `.gitignore`.
+
+- `v<version>/asksage.tar.gz` and `v<version>/asksage.tar.gz.sha256` live on the
+  orphan `dist` branch.
+- The same bytes are attached to the GitHub Release, with the digest in its
+  notes.
+
+Two interchangeable, version-pinned URLs for the same bytes:
+
+```
+https://github.com/Oaklight/llm-rosetta-shim-asksage/releases/download/v<version>/asksage.tar.gz
+https://cdn.jsdelivr.net/gh/Oaklight/llm-rosetta-shim-asksage@dist/v<version>/asksage.tar.gz
+```
+
+The archive's root is `providers/`, the layout the package ships under
+`src/llm_rosetta_shim_asksage/providers`, so a gateway source declares
+`path: "providers"`:
+
+```jsonc
+{
+  "shims": {
+    "remotes": [
+      {
+        "url": "https://cdn.jsdelivr.net/gh/Oaklight/llm-rosetta-shim-asksage@dist/v<version>/asksage.tar.gz",
+        "path": "providers",
+        "archive": "tar.gz",
+        "sha256": "<digest from v<version>/asksage.tar.gz.sha256>"
+      }
+    ]
+  }
+}
+```
+
+The digest is what pins the mirror, and the same value appears in the release
+notes. jsDelivr is only the default suggestion: the gateway accepts any URL that
+serves the same bytes, an internal mirror included.
+
+### Publishing a release
+
+1. Bump `__version__` in `src/llm_rosetta_shim_asksage/__init__.py`. The tag
+   must match it — the release workflow passes the tag without its `v` as
+   `--expect-version` and refuses a mismatch.
+2. `python scripts/build_shim_archive.py --write` builds
+   `dist/v<version>/asksage.tar.gz` and its digest locally and verifies the
+   layout. CI runs the same build without writing on every push, so a tree whose
+   `providers/` layout changed fails before a tag is cut.
+3. Tag and push: `git tag v<version> && git push origin v<version>`.
+4. `.github/workflows/release.yml` builds from the tag, creates or updates the
+   GitHub Release, uploads the archive and its digest file, and commits
+   `v<version>/` to the `dist` branch.
+
+The workflow requests `contents: write` for `GITHUB_TOKEN`, because it creates
+the release and pushes `dist`. An organization that downgrades action tokens to
+read-only must restore "Read and write permissions" under Settings → Actions →
+General, or the release step fails.
+
 ## Requirements
 
 - Python >= 3.10
