@@ -17,7 +17,7 @@ SCRIPT_PATH = (
     / "llm_rosetta_shim_asksage"
     / "providers"
     / "asksage"
-    / "token.py"
+    / "mint_token.py"
 )
 
 
@@ -177,7 +177,7 @@ def _run_main(asksage_token, monkeypatch, argv, token="tok"):
     monkeypatch.setattr(asksage_token, "_exchange", lambda *a, **kw: token)
     monkeypatch.setenv("ASKSAGE_TOKEN_EMAIL", "user@example.gov")
     monkeypatch.setenv("ASKSAGE_TOKEN_API_KEY", "key")
-    monkeypatch.setattr(sys, "argv", ["asksage-token.py", *argv])
+    monkeypatch.setattr(sys, "argv", ["mint_token.py", *argv])
     asksage_token.main()
 
 
@@ -240,7 +240,7 @@ def test_help_names_the_variables_the_code_actually_reads(
     email", so a help string naming the wrong variable sends them to the
     wrong export.
     """
-    monkeypatch.setattr(sys, "argv", ["asksage-token.py", "--help"])
+    monkeypatch.setattr(sys, "argv", ["mint_token.py", "--help"])
 
     with pytest.raises(SystemExit):
         asksage_token.main()

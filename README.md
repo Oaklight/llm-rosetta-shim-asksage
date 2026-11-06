@@ -53,7 +53,7 @@ only absolute imports.
 AskSage's inference lanes take a short-lived access token minted by
 `POST {host}/user/get-token-with-api-key`, and that token is the credential this
 package sends by default. The exchange ships with this package — the vendor
-manifest declares `connection.token_command: [python3, token.py]`, which every
+manifest declares `connection.token_command: [python3, mint_token.py]`, which every
 leaf inherits — so a provider needs no `token_command` of its own: the gateway
 runs the exchange at startup, on the declared interval and after an upstream
 401. A provider that names its own command still wins.

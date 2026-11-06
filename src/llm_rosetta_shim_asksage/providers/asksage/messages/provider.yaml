@@ -29,7 +29,7 @@ reasoning:
   effort_field: output_config.effort
   effort_range: [low, max]
   # Probed live 2026-10-13 against the ANL messages lane with a token minted by
-  # the `token.py` shipped beside this shim.  On that date the lane was
+  # the `mint_token.py` shipped beside this shim.  On that date the lane was
   # Vertex-backed Claude (`msg_vrtx_...`) and validated signatures like the API
   # it fronts: `400 messages.1.content.0.thinking.signature: Field required`
   # (#954).  `unsigned_blocks: preserve` stays the right default for a
