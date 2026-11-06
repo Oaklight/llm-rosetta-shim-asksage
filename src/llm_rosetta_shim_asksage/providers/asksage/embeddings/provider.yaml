@@ -1,0 +1,27 @@
+name: asksage--embeddings
+model_type: embeddings
+format: openai
+
+# The lane exists upstream: asksage-proxy adds it by hand as
+# `POST {server}/openai/v1/embeddings` (Oaklight/asksage-proxy PR #10), i.e.
+# `https://api.asksage.anl.gov/server/openai/v1/embeddings` on the ANL host.
+# The body is the OpenAI Embeddings dialect, so the converter for
+# `(embeddings, openai)` reads it unchanged.
+#
+# `base_url` carries `/openai/v1`, like the sibling chat lane, so the path is
+# the bare tail: the gateway builds `{base_url}{default_path}`.  Declaring the
+# catalogue path `/v1/embeddings` here would append a second `/v1`.
+connection:
+  base_url: https://api.asksage.ai/server/openai/v1
+  default_path: /embeddings
+
+# Gateway caveat, verified against llm-rosetta master: the non-LLM endpoints
+# install a static key only, and this leaf inherits the manifest's
+# `token_command`, so the gateway auto-disables an embeddings provider
+# configured through this shim with the reason "mints its credential with a
+# token_command; non-LLM endpoints support a static key only".  The gate is
+# correct until typed endpoints share the LLM lane's minting
+# (Oaklight/llm-rosetta#1401): the leaf deliberately keeps the inherited
+# credential rather than taking a per-leaf exception that #1401 would delete.
+# Declare the endpoint without the shim in the meantime: `embeddings_format:
+# openai`, a `base_url`, the path and the account key.
