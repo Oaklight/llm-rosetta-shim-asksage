@@ -4,7 +4,7 @@
 connection:
   api_key_env: ASKSAGE_API_KEY
   # The token exchange ships with the shim.
-  token_command: [python3, token.py]
+  token_command: [python3, mint_token.py]
   # The exchange takes the account key as input: the gateway hands it over in
   # this variable and sends the minted token upstream.
   token_command_env: ASKSAGE_API_KEY

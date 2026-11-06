@@ -90,7 +90,7 @@ def test_the_credential_exchange_ships_with_the_shim(_registered, name):
     assert argv is not None and argv[0] == "python3"
     script = Path(argv[1])
     assert script.is_absolute() and script.is_file(), argv
-    assert script.name == "token.py"
+    assert script.name == "mint_token.py"
     # The exchange takes the account key as input; without this the key the
     # operator enters in the panel would never reach the command.
     assert shim.connection.token_command_env == "ASKSAGE_API_KEY"
@@ -106,7 +106,7 @@ def test_the_credential_comes_from_the_vendor_manifest(_registered, name):
     assert shim.connection.api_key_env == "ASKSAGE_API_KEY"
     assert shim.connection.token_command_env == "ASKSAGE_API_KEY"
     script = Path(shim.connection.token_command[1])
-    assert script.name == "token.py" and script.is_file()
+    assert script.name == "mint_token.py" and script.is_file()
 
 
 def test_the_embeddings_endpoint_is_disabled_with_the_minting_reason(_registered):

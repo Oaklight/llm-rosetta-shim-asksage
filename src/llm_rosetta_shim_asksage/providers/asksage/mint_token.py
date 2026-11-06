@@ -18,7 +18,7 @@ straight into a provider's ``token_command``::
         "asksage": {
           "type": "asksage--open_responses",
           "base_url": "https://api.asksage.anl.gov/server/openai/v1",
-          "token_command": ["python3", "/-m llm_rosetta_shim_asksage.providers.asksage.token"]
+          "token_command": ["python3", "/scripts/mint_token.py"]
         }
       }
     }
@@ -29,7 +29,7 @@ straight into a provider's ``token_command``::
 other — leaving the line out reintroduces exactly the mismatch described under
 `Hosts` below.
 
-Every diagnostic goes to stderr, so ``$(python3 -m llm_rosetta_shim_asksage.providers.asksage.token)``
+Every diagnostic goes to stderr, so ``$(python3 -m llm_rosetta_shim_asksage.providers.asksage.mint_token)``
 captures the token and nothing else.
 
 Hosts
@@ -105,7 +105,7 @@ mount this script read-only::
     #     ASKSAGE_TOKEN_EMAIL: you@example.gov
     #     ASKSAGE_TOKEN_API_KEY: ${ASKSAGE_API_KEY}
     #   volumes:
-    #     - ./asksage-token.py:/-m llm_rosetta_shim_asksage.providers.asksage.token:ro
+    #     - ./mint_token.py:/scripts/mint_token.py:ro
 
 Note the variable names on either side: the host variable may be anything, but
 the container must see the key under ``ASKSAGE_TOKEN_API_KEY``, not
@@ -113,8 +113,8 @@ the container must see the key under ``ASKSAGE_TOKEN_API_KEY``, not
 
 Standalone download (no git clone needed)::
 
-    curl -fsSL -o asksage-token.py \
-      https://raw.githubusercontent.com/Oaklight/llm-rosetta/master/-m llm_rosetta_shim_asksage.providers.asksage.token
+    curl -fsSL -o mint_token.py \
+      https://raw.githubusercontent.com/Oaklight/llm-rosetta-shim-asksage/main/src/llm_rosetta_shim_asksage/providers/asksage/mint_token.py
 """
 
 from __future__ import annotations
