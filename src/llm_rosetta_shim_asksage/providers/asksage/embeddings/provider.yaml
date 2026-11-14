@@ -1,6 +1,7 @@
 name: asksage--embeddings
 model_type: embeddings
 format: openai
+logo: https://cdn.jsdelivr.net/gh/Oaklight/llm-rosetta-shim-asksage@main/assets/asksage.webp
 
 # The lane exists upstream: asksage-proxy adds it by hand as
 # `POST {server}/openai/v1/embeddings` (Oaklight/asksage-proxy PR #10), i.e.

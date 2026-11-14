@@ -1,6 +1,7 @@
 name: asksage--messages
 model_type: llm
 format: messages
+logo: https://cdn.jsdelivr.net/gh/Oaklight/llm-rosetta-shim-asksage@main/assets/asksage.webp
 
 connection:
   base_url: https://api.asksage.ai/server/anthropic
